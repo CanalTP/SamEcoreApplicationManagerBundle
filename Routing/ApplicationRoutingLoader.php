@@ -60,7 +60,7 @@ class ApplicationRoutingLoader extends Loader
                 if (strtolower($application[1]) == 'samcore') {
                     $importedRoutes->addPrefix('/admin');
                 } else {
-                    $importedRoutes->addPrefix('/'. strtolower($application));
+                    $importedRoutes->addPrefix('/'. strtolower($application[1]));
                 }
 
 
