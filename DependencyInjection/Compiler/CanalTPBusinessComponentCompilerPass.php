@@ -18,12 +18,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        preg_match_all(
-            "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BridgeBundle|U",
-            implode(',', $container->getParameter('kernel.bundles')),
-            $applications,
-            PREG_SET_ORDER
-        );
+        $applications = $container->getParameter('applications');
 
         $factoryDefinition = $container
             ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Component\BusinessComponentRegistry')
@@ -32,7 +27,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             ->addArgument(new Reference('canal_tp_sam.application.finder'));
 
         foreach ($applications as $application) {
-            $applicationName = strtolower($application['application']);
+            $applicationName = strtolower($application[1]);
             
             // @todo Remove
             if (!$container->has('sam.business_component.' . $applicationName)) {
