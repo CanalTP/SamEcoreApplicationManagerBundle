@@ -20,6 +20,7 @@ services:
         arguments:
             - '%kernel.bundles%'
             - '%canal_tp_sam_ecore_route_prefix%'
+            - '@service_container'
         tags:
             - { name: routing.loader }
 

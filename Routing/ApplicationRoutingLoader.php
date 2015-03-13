@@ -18,13 +18,15 @@ class ApplicationRoutingLoader extends Loader
     private $loaded = false;
     private $aBundles;
     private $routePrefix;
+    private $container;
 
     public function __construct(
-        $aBundles, $routePrefix
+        $aBundles, $routePrefix, $container
     )
     {
         $this->aBundles = $aBundles;
         $this->routePrefix = $routePrefix;
+        $this->container = $container;
     }
 
     public function load($resource, $type = null)
@@ -36,18 +38,11 @@ class ApplicationRoutingLoader extends Loader
         $this->loaded = true;
 
         $collection = new RouteCollection();
-        $aApplications = array();
+        $applications = $this->container->getParameter('applications');
 
-        preg_match_all(
-            "|\\\CanalTP(?P<applications>[^\\\]*)BridgeBundle|U",
-            implode(',', $this->aBundles),
-            $aApplications,
-            PREG_PATTERN_ORDER
-        );
+        foreach ($applications as $application) {
 
-        foreach ($aApplications['applications'] as $application) {
-
-            $resource = '@CanalTP' . $application . 'BridgeBundle/Resources/config/routing.yml';
+            $resource = '@' . $application[0] . $application[1] . 'BridgeBundle/Resources/config/routing.yml';
             $type     = 'yaml';
 
             try {
@@ -62,10 +57,10 @@ class ApplicationRoutingLoader extends Loader
                 //$appRoutes->addPrefix('/'. strtolower($application));
 
                 //Change sam to admin for url
-                if (strtolower($application) == 'samcore') {
+                if (strtolower($application[1]) == 'samcore') {
                     $importedRoutes->addPrefix('/admin');
                 } else {
-                    $importedRoutes->addPrefix('/'. strtolower($application));
+                    $importedRoutes->addPrefix('/'. strtolower($application[1]));
                 }
 
 
