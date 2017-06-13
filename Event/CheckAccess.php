@@ -34,6 +34,7 @@ class CheckAccess
             'sam_user_edit_profil',
             'canal_tp_sam_ecore_application_manager_choose_application',
             'fos_user_registration_confirmed',
+            'fos_oauth_server_authorize',
         );
         $appService = $this->container->get('canal_tp_sam.application.finder');
 
