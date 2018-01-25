@@ -4,7 +4,7 @@
     "description": "Sam e-core application bundle",
     "keywords": ["sam", "application", "manager"],
     "homepage": "https://github.com/CanalTP/SamEcoreApplicationManagerBundle",
-    "license": "AGPLv3",
+    "license": "AGPL-3.0",
     "authors": [
         {
             "name": "Rémy Abi-Khalil",
